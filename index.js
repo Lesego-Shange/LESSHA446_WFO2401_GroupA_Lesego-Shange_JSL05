@@ -27,9 +27,41 @@ const guardians = {
 
 // Function to generate playlist based on preferred genre
 function generatePlaylist(guardians, songs) {
+     // Iterate through each guardian in the guardians object
+    for (const guardian in guardians) {
+        // Retrieve the preferred genre for the current guardian
+        const preferredGenre = guardians[guardian];
     // Use the map() function to create playlists for each Guardian
     // Your code here
+        // Filter songs array to include only songs matching the preferred genre
+        // Map filtered songs to a formatted string containing title and artist
+        const playlist = songs.filter(song => song.genre === preferredGenre)
+                             .map(song => `${song.title} by ${song.artist}`);
+        
+        // Create a new <div> element for the playlist
+        const playlistDiv = document.createElement('div');
+        // Add 'playlist' class to the playlist <div>
+        playlistDiv.classList.add('playlist');
+
+        // Create a new <h2> element for the playlist title
+        const playlistTitle = document.createElement('h2');
+        // Set the text content of the playlist title to the guardian's name followed by 's Playlist
+        playlistTitle.textContent = `${guardian}'s Playlist`;
+
+        // Create a new <p> element for the playlist songs
+        const playlistSongs = document.createElement('p');
+        // Set the text content of the playlist songs to the formatted playlist array joined by newline character
+        playlistSongs.textContent = playlist.join('\n');
+
+        // Append the playlist title and playlist songs to the playlist <div>
+        playlistDiv.appendChild(playlistTitle);
+        playlistDiv.appendChild(playlistSongs);
+
+        // Append the playlist <div> to the element with id 'playlists' in the HTML document
+        document.getElementById('playlists').appendChild(playlistDiv);
+    }
 }
+
 
 // Call generatePlaylist and display the playlists for each Guardian
 generatePlaylist(guardians, songs);
