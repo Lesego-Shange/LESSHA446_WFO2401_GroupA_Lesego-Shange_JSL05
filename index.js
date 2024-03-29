@@ -36,7 +36,7 @@ function generatePlaylist(guardians, songs) {
         // Filter songs array to include only songs matching the preferred genre
         // Map filtered songs to a formatted string containing title and artist
         const playlist = songs.filter(song => song.genre === preferredGenre)
-                             .map(song => `${song.title} by ${song.artist}`);
+        .map(song => `<span class="song-title">${song.title}</span> by <span class="artist-name">${song.artist}</span>`);
         
         // Create a new <div> element for the playlist
         const playlistDiv = document.createElement('div');
@@ -51,11 +51,14 @@ function generatePlaylist(guardians, songs) {
         // Create a new <p> element for the playlist songs
         const playlistSongs = document.createElement('p');
         // Set the text content of the playlist songs to the formatted playlist array joined by newline character
-        playlistSongs.textContent = playlist.join('\n');
+        playlistSongs.innerHTML = playlist.join('<br>');
 
         // Append the playlist title and playlist songs to the playlist <div>
         playlistDiv.appendChild(playlistTitle);
         playlistDiv.appendChild(playlistSongs);
+
+        playlistDiv.style.margin = '10px'; // Adjusted margin
+        playlistDiv.style.padding = '10px'; // Adjusted padding
 
         // Append the playlist <div> to the element with id 'playlists' in the HTML document
         document.getElementById('playlists').appendChild(playlistDiv);
