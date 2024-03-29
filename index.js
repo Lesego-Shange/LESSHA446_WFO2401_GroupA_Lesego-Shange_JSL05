@@ -15,7 +15,7 @@ const songs = [
     { title: "Under Pressure", artist: "Queen & David Bowie", genre: "Rock" },
     { title: "Billie Jean", artist: "Michael Jackson", genre: "Pop" },
     { title: "Boogie Wonderland", artist: "Earth, Wind & Fire", genre: "R&B" },
-    { title: "Sweet Child o' Mine", artist: "Guns N' Roses", genre: "Rock" }
+    { title: "The Chain", artist: "Fleetwood Mac", genre: "Rock" }
     // Feel free to add even more songs
 ];
 
@@ -32,16 +32,24 @@ const guardians = {
 
 // Function to generate playlist based on preferred genre
 function generatePlaylist(guardians, songs) {
+    // Predefined playlists for each guardian
+    const playlists = {
+        "Star-Lord": ["Moonage Daydream", "Come and Get Your Love", "The Chain"],
+        "Gamora": ["Hooked on a Feeling", "I Want You Back"],
+        "Drax": ["Ain't No Mountain High Enough"],
+        "Rocket": ["Moonage Daydream", "Come and Get Your Love", "The Chain"],
+        "Groot": ["Hooked on a Feeling", "I Want You Back"]
+    };
      // Iterate through each guardian in the guardians object
     for (const guardian in guardians) {
         // Retrieve the preferred genre for the current guardian
-        const preferredGenre = guardians[guardian];
+        const playlist = playlists[guardian];
     // Use the map() function to create playlists for each Guardian
     // Your code here
         // Filter songs array to include only songs matching the preferred genre
         // Map filtered songs to a formatted string containing title and artist
-        const playlist = songs.filter(song => song.genre === preferredGenre)
-        .map(song => `<span class="song-title">${song.title}</span> by <span class="artist-name">${song.artist}</span>`);
+        const filteredSongs = songs.filter(song => playlist.includes(song.title));
+        
         
         // Create a new <div> element for the playlist
         const playlistDiv = document.createElement('div');
@@ -56,7 +64,7 @@ function generatePlaylist(guardians, songs) {
         // Create a new <p> element for the playlist songs
         const playlistSongs = document.createElement('p');
         // Set the text content of the playlist songs to the formatted playlist array joined by newline character
-        playlistSongs.innerHTML = playlist.join('<br>');
+        playlistSongs.innerHTML = filteredSongs.map(song => `<span class="song-title">${song.title} by <span class="artist-name">${song.artist}</span></span>`).join('<br>');
 
         // Append the playlist title and playlist songs to the playlist <div>
         playlistDiv.appendChild(playlistTitle);
